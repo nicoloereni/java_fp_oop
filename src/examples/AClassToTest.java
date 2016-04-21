@@ -1,6 +1,8 @@
 package examples;
 
-import java.util.List;
+import java.util.*;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class AClassToTest {
 
@@ -49,7 +51,7 @@ public class AClassToTest {
                 continue;
             }
 
-            if (student.gradScore > bestScore){
+            if (student.gradScore > bestScore) {
                 bestScore = student.gradScore;
             }
 
@@ -59,4 +61,40 @@ public class AClassToTest {
 
     }
 
+
+    public int bestScoreAfterAYearFp(List<Student> students, int year) {
+
+        OptionalInt bestScore = students.stream()
+                .filter(student -> student.gradYear == year)
+                .mapToInt(Student::getGradeScore)
+                .max();
+
+        return bestScore.getAsInt();
+
+    }
+
+    public Map groupStudentByYear(List<Student> students){
+        Map<Integer, List<Student>> studentByGradYear = new HashMap<>();
+
+        for(Student student : students){
+
+            List<Student> list = studentByGradYear.get(student.getGradYear());
+
+            if(list == null){
+                list = new ArrayList<>();
+                studentByGradYear.put(student.getGradYear(), list);
+            }
+
+            list.add(student);
+
+        }
+
+        return studentByGradYear;
+
+    }
+
+    public Map groupStudentByYearFX(List<Student> students) {
+        Map<Integer, List<Student>> result = students.stream().collect(groupingBy(student->student.getGradYear()));
+        return result;
+    }
 }

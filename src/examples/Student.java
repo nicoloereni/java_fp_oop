@@ -11,4 +11,12 @@ public class Student {
         this.gradScore = gradScore;
         this.gradYear = gradYear;
     }
+
+    public int getGradeScore() {
+        return gradScore;
+    }
+
+    public int getGradYear() {
+        return gradYear;
+    }
 }
